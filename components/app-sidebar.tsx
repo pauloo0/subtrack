@@ -1,8 +1,10 @@
+"use client";
+
+import { signOutUser } from "@/app/(auth)/logout/actions";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
@@ -11,24 +13,16 @@ import { Home, LogOut, Users2 } from "lucide-react";
 
 const SIDEBAR_ITEMS = [
   {
-    title: 'Home',
-    ref: '/',
-    icon: Home
+    title: "Home",
+    ref: "/",
+    icon: Home,
   },
   {
-    title: 'Clientes',
-    ref: '/clients',
-    icon: Users2
+    title: "Clientes",
+    ref: "/clients",
+    icon: Users2,
   },
-]
-
-const FOOTER_ITEMS = [
-  {
-    title: 'Logout',
-    ref: '/',
-    icon: LogOut
-  },
-]
+];
 
 export function AppSidebar() {
   return (
@@ -37,7 +31,10 @@ export function AppSidebar() {
         <SidebarMenu>
           {SIDEBAR_ITEMS.map((item, idx) => (
             <SidebarMenuItem key={idx}>
-              <SidebarMenuButton render={<a href={item.ref} />} tooltip={item.title}>
+              <SidebarMenuButton
+                render={<a href={item.ref} />}
+                tooltip={item.title}
+              >
                 <item.icon />
                 {item.title}
               </SidebarMenuButton>
@@ -48,13 +45,13 @@ export function AppSidebar() {
 
       <SidebarFooter>
         <SidebarMenu>
-          {FOOTER_ITEMS.map((item, idx) => (
-            <SidebarMenuItem key={idx}>
-              <SidebarMenuButton render={<a href={item.ref} />} tooltip={item.title}>
-                <item.icon /> {item.title}
+          <form action={signOutUser}>
+            <SidebarMenuItem>
+              <SidebarMenuButton type="submit" tooltip="Logout">
+                <LogOut /> Logout
               </SidebarMenuButton>
             </SidebarMenuItem>
-          ))}
+          </form>
         </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
