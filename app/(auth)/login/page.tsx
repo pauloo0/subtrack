@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { loginUserWithEmailPassword } from "./actions";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 export default function Login() {
   const form = useForm<LoginFormValues>({
@@ -26,52 +27,71 @@ export default function Login() {
   };
 
   return (
-    <form id="login-form" onSubmit={form.handleSubmit(onSubmit)}>
-      <Controller
-        name="email"
-        control={form.control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor="email">Email</FieldLabel>
-            <Input
-              {...field}
-              id="email"
-              aria-invalid={fieldState.invalid}
-              placeholder="hello@example.com"
-              autoComplete="off"
-            />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-      <Controller
-        name="password"
-        control={form.control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor="password">Password</FieldLabel>
-            <Input
-              {...field}
-              id="password"
-              type="password"
-              aria-invalid={fieldState.invalid}
-              placeholder="******"
-              autoComplete="off"
-            />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
+    <Card className="w-1/3">
+      <CardContent>
+        <form
+          id="login-form"
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+        >
+          <Controller
+            name="email"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <Input
+                  {...field}
+                  id="email"
+                  aria-invalid={fieldState.invalid}
+                  placeholder="hello@example.com"
+                  autoComplete="off"
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+          <Controller
+            name="password"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="password">Password</FieldLabel>
+                <Input
+                  {...field}
+                  id="password"
+                  type="password"
+                  aria-invalid={fieldState.invalid}
+                  placeholder="******"
+                  autoComplete="off"
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
 
-      <p>
-        Ainda não tens conta? <Link href="/register">Regista-te agora!</Link>
-      </p>
-
-      <Field orientation="horizontal">
-        <Button type="submit" form="login-form">
-          Iniciar sessão
-        </Button>
-      </Field>
-    </form>
+          <p>
+            Ainda não tens conta? Regista-te{" "}
+            <Link
+              href="/register"
+              className="text-amber-400 font-bold hover:underline"
+            >
+              aqui.
+            </Link>
+          </p>
+        </form>
+      </CardContent>
+      <CardFooter>
+        <Field orientation="horizontal">
+          <Button type="submit" form="login-form">
+            Iniciar sessão
+          </Button>
+        </Field>
+      </CardFooter>
+    </Card>
   );
 }
