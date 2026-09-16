@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { clientSchema, ClientFormValues } from "@/lib/validations/clients";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useWatch } from "react-hook-form";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -27,6 +27,23 @@ export default function NewClient() {
       alert(result.message);
     }
     redirect("/clients");
+  };
+
+  const formValues = useWatch({ control: form.control });
+
+  const onCancel = () => {
+    const hasData = Object.values(formValues).some(
+      (value) => value !== undefined && value !== null && value !== "",
+    );
+
+    if (hasData && confirm("Tem a certeza que quer cancelar?")) {
+      form.reset();
+      redirect("/clients");
+    }
+    if (!hasData) {
+      form.reset();
+      redirect("/clients");
+    }
   };
 
   return (
@@ -103,7 +120,7 @@ export default function NewClient() {
           <Button type="submit" form="new-client-form">
             Gravar
           </Button>
-          <Button type="reset" variant="outline" onClick={() => form.reset()}>
+          <Button type="reset" variant="outline" onClick={onCancel}>
             Cancelar
           </Button>
         </Field>
