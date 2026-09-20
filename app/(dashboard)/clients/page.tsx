@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { ChevronRight, Plus } from "lucide-react";
 import Link from "next/link";
 
 import { createClient } from "@/lib/supabase/server";
@@ -32,6 +32,7 @@ export default async function Clients() {
             <th>Nome do cliente</th>
             <th>Email</th>
             <th>Contact</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -41,6 +42,11 @@ export default async function Clients() {
                 <td>{client.name}</td>
                 <td>{client.email}</td>
                 <td>{client.contact}</td>
+                <td>
+                  <Link href={`/clients/${client.id}`}>
+                    <ChevronRight />
+                  </Link>
+                </td>
               </tr>
             ))}
         </tbody>
