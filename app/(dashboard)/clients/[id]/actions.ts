@@ -5,6 +5,17 @@ import { addYears, format } from "date-fns";
 export async function renewPackage(packageId: string) {
   const supabase = await createClient();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return {
+      success: false,
+      message: "Não autenticado",
+    };
+  }
+
   const { data: pkg, error } = await supabase
     .from("packages")
     .select("id, due_date")
