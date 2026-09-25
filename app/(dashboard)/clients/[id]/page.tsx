@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { PencilLineIcon, Plus } from "lucide-react";
 import PackageTable from "./components/package-table";
 
 type ClientPageProps = {
@@ -28,6 +28,12 @@ export default async function ClientPage({ params }: ClientPageProps) {
       <h1>{client.name}</h1>
       <p>Email: {client.email}</p>
       <p>Contact: {client.contact}</p>
+
+      <Link href={`/clients/${id}/edit`}>
+        <Button type="button" variant="outline" className="cursor-pointer">
+          <PencilLineIcon /> Editar cliente
+        </Button>
+      </Link>
 
       <Link href={`/clients/${id}/new-package`}>
         <Button
