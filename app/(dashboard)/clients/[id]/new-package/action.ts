@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { packageSchema } from "@/lib/validations/packages";
 import { createClient } from "@/lib/supabase/server";
+import { format } from "date-fns";
 
 export async function createClientPackage(input: unknown) {
   const result = packageSchema.safeParse(input);
@@ -30,7 +31,11 @@ export async function createClientPackage(input: unknown) {
     };
   }
 
-  const { data, error } = await supabase.from("packages").insert(result.data);
+  const { data, error } = await supabase.from("packages").insert({
+    ...result.data,
+    start_date: format(result.data.start_date, "yyyyMMdd"),
+    due_date: format(result.data.due_date, "yyyyMMdd"),
+  });
 
   if (error) {
     console.error(error);
