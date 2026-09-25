@@ -2,9 +2,11 @@
 import type { Database } from "@/types/supabase";
 import { Button } from "@/components/ui/button";
 import { differenceInDays, format, startOfToday } from "date-fns";
-import { CopyIcon, PencilLineIcon } from "lucide-react";
+import { CopyIcon, PencilLineIcon, RotateCwIcon } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { renewPackage } from "../actions";
+import { useRouter } from "next/navigation";
 
 type Package = Database["public"]["Tables"]["packages"]["Row"];
 
@@ -13,12 +15,27 @@ type PackageTableProps = {
 };
 
 export default function PackageTable({ packages }: PackageTableProps) {
+  const router = useRouter();
+
   const copyToClipboard = (fullUrl: string | null) => {
     if (!fullUrl) {
       alert("Não tem link para copiar.");
       return;
     }
     navigator.clipboard.writeText(fullUrl);
+  };
+
+  const handleRenew = async (id: string) => {
+    const result = await renewPackage(id);
+
+    if (!result.success) {
+      console.error(result);
+      alert(result.message);
+      return;
+    }
+
+    alert(result.message);
+    router.refresh();
   };
 
   return (
@@ -69,6 +86,13 @@ export default function PackageTable({ packages }: PackageTableProps) {
                     <Link href={`/packages/${pkg.id}/edit`}>
                       <PencilLineIcon />
                     </Link>
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="link"
+                    onClick={() => handleRenew(pkg.id)}
+                  >
+                    <RotateCwIcon />
                   </Button>
                 </td>
               </tr>
