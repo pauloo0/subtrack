@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import PackageTable from "./components/package-table";
 
 type ClientPageProps = {
   params: Promise<{ id: string }>;
@@ -35,6 +36,8 @@ export default async function ClientPage({ params }: ClientPageProps) {
           <Plus /> Novo pacote
         </Button>
       </Link>
+
+      <PackageTable packages={client.packages} />
     </div>
   );
 }
