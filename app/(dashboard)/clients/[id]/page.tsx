@@ -26,6 +26,8 @@ export default async function ClientPage({ params }: ClientPageProps) {
   return (
     <div>
       <h1>{client.name}</h1>
+      <p>Email: {client.email}</p>
+      <p>Contact: {client.contact}</p>
 
       <Link href={`/clients/${id}/new-package`}>
         <Button
