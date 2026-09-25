@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## What it is
 
-## Getting Started
+SubTrack is a platform where users can manage clients and manage their subscriptions.
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- NextJS
+- Supabase
+- ShadCN
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Main goal
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The main goal with this project is to learn NextJS and Supabase DB while building something that I will actually be using in my day-to-day life.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Decisions
 
-## Learn More
+I will be the only user of this app, so I opted out of RLS in supabase.
+The app will still have a login system, using Supabase Auth as it will be published to a VPS in production.
+No AI written code.
 
-To learn more about Next.js, take a look at the following resources:
+## Learning process
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+I was tired of asking AI to write code for me, so I decided to learn with AI instead of making it do the dirty work.
+I decided to not use AI written code, but I would still reference it for syntax references, best practises or to get started on a topic. I would explain what I wanted and my view on the solution and it tell me what is the best option. Doing it this way I feel that I've learned a lot about NextJS best practises.
+I found it challenging to understand server components and client components, when to use client components and when not to, when to use component abstraction so the main component is a server component and a form inside it is a client component. Doing it multiple times made me understand the differences and apply it without referencing or asking AI to do it.
