@@ -2,6 +2,9 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight, Plus } from "lucide-react";
 import Link from "next/link";
 
+import { columns } from "./components/columns";
+import { DataTable } from "@/components/data-table";
+
 import { createClient } from "@/lib/supabase/server";
 
 export default async function Clients() {
@@ -26,31 +29,7 @@ export default async function Clients() {
         </Button>
       </Link>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Nome do cliente</th>
-            <th>Email</th>
-            <th>Contact</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {data &&
-            data.map((client) => (
-              <tr key={client.id}>
-                <td>{client.name}</td>
-                <td>{client.email}</td>
-                <td>{client.contact}</td>
-                <td>
-                  <Link href={`/clients/${client.id}`}>
-                    <ChevronRight />
-                  </Link>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <DataTable columns={columns} data={data} />
     </div>
   );
 }
