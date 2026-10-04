@@ -12,3 +12,10 @@ export const packageSchema = z.object({
 });
 
 export type PackageFormValues = z.infer<typeof packageSchema>;
+
+export const packageUpdateSchema = z.object({
+  due_date: z.date(),
+  price: z.number(),
+});
+
+export type PackageUpdateFormValues = z.infer<typeof packageUpdateSchema>;
