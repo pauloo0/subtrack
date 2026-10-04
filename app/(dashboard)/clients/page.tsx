@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
-import { columns } from "./components/columns";
+import { columns } from "./columns";
 import { DataTable } from "@/components/data-table";
 
 import { createClient } from "@/lib/supabase/server";
