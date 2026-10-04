@@ -73,9 +73,11 @@ export function DataTable<TData extends RowData>({
               </TableRow>
             ))
           ) : (
-            <TableCell colSpan={columns.length} className="h-24 text-center">
-              Sem resultados
-            </TableCell>
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                Sem resultados
+              </TableCell>
+            </TableRow>
           )}
         </TableBody>
       </Table>
