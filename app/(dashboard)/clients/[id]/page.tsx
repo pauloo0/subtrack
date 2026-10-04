@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PencilLineIcon, Plus } from "lucide-react";
 import PackageTable from "./components/package-table";
+import { DataTable } from "@/components/data-table";
+import { columns } from "./columns";
 
 type ClientPageProps = {
   params: Promise<{ id: string }>;
@@ -45,7 +47,7 @@ export default async function ClientPage({ params }: ClientPageProps) {
         </Button>
       </Link>
 
-      <PackageTable packages={client.packages} />
+      <DataTable columns={columns} data={client.packages} />
     </div>
   );
 }
