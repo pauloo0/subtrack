@@ -24,7 +24,7 @@ export function DataTable<TData extends RowData>({
 }: DataTableProps<TData>) {
   const table = useTable({
     features,
-    data,
+    data: data || [],
     columns,
   });
 
