@@ -4,6 +4,7 @@ import { useState } from "react";
 import {
   useTable,
   type ColumnDef,
+  type ColumnFiltersState,
   type RowData,
   type SortingState,
 } from "@tanstack/react-table";
@@ -29,14 +30,17 @@ export function DataTable<TData extends RowData>({
   data,
 }: DataTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useTable({
     features,
     data: data || [],
     columns,
     onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
     state: {
       sorting,
+      columnFilters,
     },
   });
 
