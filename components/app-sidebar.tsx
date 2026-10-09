@@ -8,6 +8,7 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Home, LogOut, Users2 } from "lucide-react";
 
@@ -28,6 +29,7 @@ export function AppSidebar() {
   return (
     <Sidebar variant="floating" collapsible="icon">
       <SidebarContent className="p-2">
+        <SidebarTrigger />
         <SidebarMenu>
           {SIDEBAR_ITEMS.map((item, idx) => (
             <SidebarMenuItem key={idx}>
