@@ -22,7 +22,7 @@ export const columns = columnHelper.columns([
             placeholder="Nome"
             value={(column.getFilterValue() as string) ?? ""}
             onChange={(e) => column.setFilterValue(e.target.value)}
-            className="max-w-xs"
+            className="max-w-fit"
           />
           <Button
             variant="ghost"
@@ -42,7 +42,7 @@ export const columns = columnHelper.columns([
             placeholder="Email"
             value={(column.getFilterValue() as string) ?? ""}
             onChange={(e) => column.setFilterValue(e.target.value)}
-            className="max-w-xs"
+            className="max-w-fit"
           />
           <Button
             variant="ghost"
@@ -62,7 +62,7 @@ export const columns = columnHelper.columns([
             placeholder="Contacto"
             value={(column.getFilterValue() as string) ?? ""}
             onChange={(e) => column.setFilterValue(e.target.value)}
-            className="max-w-xs"
+            className="max-w-fit"
           />
           <Button
             variant="ghost"
