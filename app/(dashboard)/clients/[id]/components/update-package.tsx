@@ -8,11 +8,19 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import CalendarPicker from "@/components/calendar-picker";
 import { startOfToday } from "date-fns";
+import { updateClientPackage } from "../actions";
 
-export default function UpdatePackageForm() {
+interface UpdatePackageFormProps {
+  packageId: string;
+  setEditOpen: React.Dispatch<boolean>;
+}
+
+export default function UpdatePackageForm({
+  packageId,
+  setEditOpen,
+}: UpdatePackageFormProps) {
   const formDefaults = {
     due_date: startOfToday(),
     price: 40,
@@ -24,11 +32,20 @@ export default function UpdatePackageForm() {
   });
 
   const onSubmit = async (data: PackageUpdateFormValues) => {
-    console.log(data);
+    const result = await updateClientPackage(packageId, data);
+
+    alert(result.message);
+    if (result.success) {
+      setEditOpen(false);
+    }
   };
 
   return (
-    <form id="update-package-form" onSubmit={form.handleSubmit(onSubmit)}>
+    <form
+      id="update-package-form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      className="flex flex-col gap-4"
+    >
       <Controller
         name="due_date"
         control={form.control}

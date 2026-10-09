@@ -12,7 +12,7 @@ import {
   UserIcon,
 } from "lucide-react";
 
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -29,6 +29,7 @@ import { renewPackage } from "../actions";
 import UpdatePackageForm from "./update-package";
 
 import { Database } from "@/types/supabase";
+import { Field } from "@/components/ui/field";
 
 type Package = Database["public"]["Tables"]["packages"]["Row"];
 
@@ -123,7 +124,21 @@ export default function DropdownActions({ pkg }: DropdownActionsProps) {
 
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
         <DialogContent>
-          <UpdatePackageForm />
+          <UpdatePackageForm packageId={pkg.id} setEditOpen={setEditOpen} />
+          <DialogFooter>
+            <Field orientation="horizontal">
+              <Button type="submit" form="update-package-form">
+                Gravar
+              </Button>
+              <Button
+                type="reset"
+                variant="outline"
+                onClick={() => setEditOpen(false)}
+              >
+                Cancelar
+              </Button>
+            </Field>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </>

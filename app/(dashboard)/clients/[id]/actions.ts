@@ -1,5 +1,8 @@
 "use server";
+
+import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
+import { packageUpdateSchema } from "@/lib/validations/packages";
 import { addYears, format } from "date-fns";
 
 export async function renewPackage(packageId: string) {
@@ -58,5 +61,53 @@ export async function renewPackage(packageId: string) {
   return {
     success: true,
     message: "Pacote renovado com sucesso.",
+  };
+}
+
+export async function updateClientPackage(packageId: string, input: unknown) {
+  const result = packageUpdateSchema.safeParse(input);
+
+  if (!result.success) {
+    const errors = z.flattenError(result.error);
+    return {
+      success: false,
+      message: "Os dados introduzidos são inválidos",
+      fieldErrors: errors.fieldErrors,
+    };
+  }
+
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return {
+      success: false,
+      message: "Não autenticado",
+      fieldErrors: [],
+    };
+  }
+
+  const { data, error: updError } = await supabase
+    .from("packages")
+    .update({
+      due_date: format(result.data.due_date, "yyyyMMdd"),
+      price: result.data.price,
+    })
+    .eq("id", packageId);
+
+  if (updError) {
+    console.error(updError);
+    return {
+      success: false,
+      message: "Não consegui atualizar os dados deste pacote",
+    };
+  }
+
+  return {
+    success: true,
+    message: "Pacote atualizado com sucesso.",
   };
 }

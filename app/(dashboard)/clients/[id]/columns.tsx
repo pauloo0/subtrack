@@ -7,19 +7,6 @@ import { type Database } from "@/types/supabase";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { useState } from "react";
 import DropdownActions from "./components/dropdown-actions";
 
 type Package = Database["public"]["Tables"]["packages"]["Row"];
