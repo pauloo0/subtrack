@@ -56,15 +56,23 @@ export const columns = columnHelper.columns([
       </div>
     ),
   }),
-  columnHelper.display({
-    id: "due_days",
-    header: () => <div className="text-center">Dias Venc.</div>,
+  columnHelper.accessor((row) => differenceInDays(row.due_date!, new Date()), {
+    id: "days_remaining",
+    header: ({ column }) => (
+      <div className="text-center">
+        Days remaining
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          <ArrowUpDown className="h-4 w-4" />
+        </Button>
+      </div>
+    ),
     cell: ({ row }) => {
       const today = startOfToday();
       const packageDueDate = row.original.due_date;
-      const dueDays = packageDueDate
-        ? differenceInDays(packageDueDate, today)
-        : 0;
+      const dueDays = differenceInDays(packageDueDate!, today);
 
       return (
         <div
@@ -78,6 +86,9 @@ export const columns = columnHelper.columns([
         </div>
       );
     },
+    sortFn: (rowA, rowB) =>
+      new Date(rowA.original.due_date!).getTime() -
+      new Date(rowB.original.due_date!).getTime(),
   }),
   columnHelper.accessor("price", {
     header: ({ column }) => (
