@@ -68,6 +68,28 @@ export const columns = columnHelper.columns([
       </div>
     ),
   }),
+  columnHelper.accessor("price", {
+    header: ({ column }) => (
+      <div className="text-right">
+        Preço
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      </div>
+    ),
+    cell: ({ row }) => {
+      const price = parseFloat(row.getValue("price"));
+      const formatted = new Intl.NumberFormat("pt-PT", {
+        style: "currency",
+        currency: "EUR",
+      }).format(price);
+
+      return <div className="text-right">{formatted}</div>;
+    },
+  }),
   columnHelper.display({
     id: "actions",
     cell: ({ row }) => {
