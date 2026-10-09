@@ -8,6 +8,8 @@ import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DropdownActions from "./components/dropdown-actions";
+import { differenceInDays, startOfToday } from "date-fns";
+import { cn } from "cn";
 
 type Package = Database["public"]["Tables"]["packages"]["Row"];
 
@@ -67,6 +69,29 @@ export const columns = columnHelper.columns([
         </Button>
       </div>
     ),
+  }),
+  columnHelper.display({
+    id: "due_days",
+    header: () => <div className="text-center">Dias Venc.</div>,
+    cell: ({ row }) => {
+      const today = startOfToday();
+      const packageDueDate = row.original.due_date;
+      const dueDays = packageDueDate
+        ? differenceInDays(packageDueDate, today)
+        : 0;
+
+      return (
+        <div
+          className={cn(
+            "text-center",
+            dueDays <= 7 && "text-amber-500",
+            dueDays <= 0 && "text-red-500",
+          )}
+        >
+          {dueDays}
+        </div>
+      );
+    },
   }),
   columnHelper.accessor("price", {
     header: ({ column }) => (
