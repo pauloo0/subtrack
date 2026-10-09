@@ -7,7 +7,6 @@ export const packageSchema = z.object({
   username: z.string(),
   password: z.string(),
   url: z.string(),
-  fullurl: z.string(),
   price: z.number(),
 });
 

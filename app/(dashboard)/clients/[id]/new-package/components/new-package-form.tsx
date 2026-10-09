@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { packageSchema, PackageFormValues } from "@/lib/validations/packages";
 import { redirect } from "next/navigation";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useWatch } from "react-hook-form";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import { addYears, startOfToday } from "date-fns";
 import { Database } from "@/types/supabase";
 import { createClientPackage } from "../actions";
 import CalendarPicker from "@/components/calendar-picker";
+import { generateFullUrl } from "../functions";
 
 type Client = Pick<
   Database["public"]["Tables"]["clients"]["Row"],
@@ -30,8 +31,6 @@ export default function NewPackageForm({ client }: NewPackageFormProps) {
     url: "http://wh.gktxp.com:8080",
     username: "",
     password: "",
-    fullurl:
-      "http://wh.gktxp.com:8080/get.php?username={USERNAME}&password={PASSWORD}&type=m3u_plus&output=mpegs",
     price: 40,
   };
 
@@ -56,12 +55,28 @@ export default function NewPackageForm({ client }: NewPackageFormProps) {
     }
   };
 
+  const formValues = useWatch({ control: form.control });
+
+  const renderFullUrl = () => {
+    const url = formValues.url || "";
+    const username = formValues.username || "";
+    const password = formValues.password || "";
+
+    const parsedUrl = formValues.url === "" ? "{URL}" : url;
+    const parsedUsername = username === "" ? "{USERNAME}" : username;
+    const parsedPassword = password === "" ? "{PASSWORD}" : password;
+
+    return generateFullUrl(parsedUrl, parsedUsername, parsedPassword);
+  };
+
   return (
     <Card className="w-3/4 md:w-1/2 mx-auto">
       <CardContent>
         <form
           id="new-package-form"
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(onSubmit, (errors) =>
+            console.log("invalid", errors),
+          )}
           className="flex flex-col gap-4"
         >
           <h1>{client.name}</h1>
@@ -94,7 +109,6 @@ export default function NewPackageForm({ client }: NewPackageFormProps) {
                   id="username"
                   aria-invalid={fieldState.invalid}
                   autoComplete="off"
-                  onBlur={(e) => form.setValues({})}
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -120,24 +134,10 @@ export default function NewPackageForm({ client }: NewPackageFormProps) {
               </Field>
             )}
           />
-          <Controller
-            name="fullurl"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel htmlFor="fullurl">Url completo</FieldLabel>
-                <Input
-                  {...field}
-                  id="fullurl"
-                  aria-invalid={fieldState.invalid}
-                  autoComplete="off"
-                />
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
+          <div>
+            <p>Url completo</p>
+            <p>{renderFullUrl(formValues)}</p>
+          </div>
           <Controller
             name="start_date"
             control={form.control}

@@ -4,6 +4,7 @@ import { z } from "zod";
 import { packageSchema } from "@/lib/validations/packages";
 import { createClient } from "@/lib/supabase/server";
 import { format } from "date-fns";
+import { generateFullUrl } from "./functions";
 
 export async function createClientPackage(input: unknown) {
   const result = packageSchema.safeParse(input);
@@ -14,6 +15,26 @@ export async function createClientPackage(input: unknown) {
       success: false,
       message: "Os dados introduzidos são inválidos",
       fieldErrors: errors.fieldErrors,
+    };
+  }
+
+  const fullUrl = generateFullUrl(
+    result.data.url,
+    result.data.username,
+    result.data.password,
+  );
+
+  if (
+    !fullUrl ||
+    fullUrl === "" ||
+    fullUrl.includes("{") ||
+    fullUrl.includes("}")
+  ) {
+    return {
+      success: false,
+      message:
+        "O URL não foi gerado corretamente. Preencha os dados corretamente.",
+      fieldErrors: [],
     };
   }
 
@@ -33,6 +54,7 @@ export async function createClientPackage(input: unknown) {
 
   const { data, error } = await supabase.from("packages").insert({
     ...result.data,
+    fullurl: fullUrl,
     start_date: format(result.data.start_date, "yyyyMMdd"),
     due_date: format(result.data.due_date, "yyyyMMdd"),
   });
