@@ -17,14 +17,10 @@ export default async function Clients() {
 
   return (
     <div className="h-full flex flex-col gap-4">
-      <h1 className="text-2xl">Clients</h1>
+      <h1 className="font-semibold text-2xl">Clientes</h1>
 
-      <Link href="clients/new">
-        <Button
-          type="button"
-          variant="secondary"
-          className="w-full cursor-pointer"
-        >
+      <Link href="clients/new" className="w-fit">
+        <Button type="button" variant="secondary" className="cursor-pointer">
           <Plus /> Criar novo
         </Button>
       </Link>

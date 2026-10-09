@@ -47,7 +47,7 @@ export default function NewClient() {
   };
 
   return (
-    <Card className="w-1/3">
+    <Card className="w-3/4 md:w-1/2 mx-auto">
       <CardContent>
         <form
           id="new-client-form"
