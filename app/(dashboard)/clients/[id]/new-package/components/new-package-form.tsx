@@ -134,10 +134,10 @@ export default function NewPackageForm({ client }: NewPackageFormProps) {
               </Field>
             )}
           />
-          <div>
-            <p>Url completo</p>
+          <Field>
+            <FieldLabel>Url completo</FieldLabel>
             <p>{renderFullUrl()}</p>
-          </div>
+          </Field>
           <Controller
             name="start_date"
             control={form.control}
