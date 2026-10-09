@@ -9,6 +9,8 @@ import {
   type SortingState,
 } from "@tanstack/react-table";
 
+import { features, type DataTableFeatures } from "./data-table-features";
+
 import {
   Table,
   TableBody,
@@ -17,8 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-
-import { features, type DataTableFeatures } from "./data-table-features";
+import { Input } from "./ui/input";
 
 interface DataTableProps<TData extends RowData> {
   columns: ColumnDef<DataTableFeatures, TData>[];
@@ -42,10 +43,18 @@ export function DataTable<TData extends RowData>({
       sorting,
       columnFilters,
     },
+    globalFilterFn: "includesString",
   });
 
   return (
-    <div className="overflow-hidden rounded-md border">
+    <div className="overflow-hidden rounded-md flex flex-col items-start justify-center gap-4">
+      <Input
+        placeholder="Pesquisar..."
+        value={String(table.state.globalFilter ?? "")}
+        onChange={(e) => table.setGlobalFilter(e.target.value)}
+        className="max-w-sm"
+      />
+
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

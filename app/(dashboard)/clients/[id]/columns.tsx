@@ -6,7 +6,6 @@ import { type Database } from "@/types/supabase";
 
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import DropdownActions from "./components/dropdown-actions";
 import { differenceInDays, startOfToday } from "date-fns";
 import { cn } from "cn";
@@ -19,53 +18,40 @@ export const columns = columnHelper.columns([
   columnHelper.accessor("username", {
     header: ({ column }) => (
       <div>
-        <Input
-          placeholder="Username"
-          value={(column.getFilterValue() as string) ?? ""}
-          onChange={(e) => column.setFilterValue(e.target.value)}
-          className="max-w-fit"
-        />
+        Username
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="h-4 w-4" />
         </Button>
       </div>
     ),
+    enableGlobalFilter: true,
   }),
   columnHelper.accessor("password", {
     header: ({ column }) => (
       <div>
-        <Input
-          placeholder="Password"
-          value={(column.getFilterValue() as string) ?? ""}
-          onChange={(e) => column.setFilterValue(e.target.value)}
-          className="max-w-fit"
-        />
+        Password
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="h-4 w-4" />
         </Button>
       </div>
     ),
+    enableGlobalFilter: true,
   }),
   columnHelper.accessor("due_date", {
     header: ({ column }) => (
       <div>
-        <Input
-          placeholder="Vencimento"
-          value={(column.getFilterValue() as string) ?? ""}
-          onChange={(e) => column.setFilterValue(e.target.value)}
-          className="max-w-fit"
-        />
+        Data Venc.
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="h-4 w-4" />
         </Button>
       </div>
     ),
@@ -101,7 +87,7 @@ export const columns = columnHelper.columns([
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="h-4 w-4" />
         </Button>
       </div>
     ),
@@ -114,13 +100,18 @@ export const columns = columnHelper.columns([
 
       return <div className="text-right">{formatted}</div>;
     },
+    enableGlobalFilter: true,
   }),
   columnHelper.display({
     id: "actions",
     cell: ({ row }) => {
       const pkg = row.original;
 
-      return <DropdownActions pkg={pkg} />;
+      return (
+        <div className="text-right">
+          <DropdownActions pkg={pkg} />
+        </div>
+      );
     },
   }),
 ]);
