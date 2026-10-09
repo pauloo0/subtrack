@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { addYears, startOfToday } from "date-fns";
 import { Database } from "@/types/supabase";
-import { createClientPackage } from "../action";
+import { createClientPackage } from "../actions";
 import CalendarPicker from "@/components/calendar-picker";
 
 type Client = Pick<
